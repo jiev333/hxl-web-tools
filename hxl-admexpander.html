@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>HXL ADM Expander</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/hxl-web-tools.css">
+        <script src="libs/jquery.js"></script>
+        <script src="libs/papaparse.min.js"></script>
+        <script src="libs/hxl.js"
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-46399763-1']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                 var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                 ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>         
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 header">
+                    <h1>HXL ADM Expander</h1>
+                    <p>A tool for converting adm lists in a single cell to multiple rows.</p>
+                </div>
+            </div>
+            <div class="row inputrow">
+                <div class="col-md-6">
+                    <textarea id="hxldata1" rows="10" cols="50" placeholder="Paste Dataset here">header1    header2
+#adm3   #adm4
+kath    vdc1,vdc2,vdc3</textarea>
+                </div>
+                <div class="col-md-6">
+                    <textarea id="hxldata2" rows="10" cols="50" placeholder="Paste adm relationship here"></textarea>
+                </div>                
+            </div>
+            <div class="col-md-12">
+                <button id="expand-button" type="button" class="btn btn-primary">Expand</button>
+            </div>
+        </div>
+        <script src="js/hxl-admexpander.js"></script>   
+    </body>
+</html>

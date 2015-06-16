@@ -1,0 +1,10 @@
+.header {
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-bottom-color:#ccc;
+}
+
+.inputrow {
+	margin-bottom:20px;
+	margin-top:20px;
+}

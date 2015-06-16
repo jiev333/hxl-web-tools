@@ -200,6 +200,20 @@ hxl.classes.Source.prototype.getValues = function(pattern) {
 }
 
 /**
+ * Get a list of indices for columns matching a tag pattern.
+ */
+hxl.classes.Source.prototype.getMatchingColumns = function(pattern) {
+    var result = [];
+    var pattern = hxl.classes.Pattern.parse(pattern); // more efficient to precompile
+    this.getColumns().forEach(function (col) {
+        if (pattern.match(col)) {
+            result.push(col);
+        }
+    });
+    return result;
+}
+
+/**
  * Fire a callback on each row of data.
  *
  * The callback has the form
@@ -224,6 +238,26 @@ hxl.classes.Source.prototype.each = function(callback) {
  * Alias each() to forEach()
  */
 hxl.classes.Source.prototype.forEach = hxl.classes.Source.prototype.each;
+
+/**
+ * Test if a tag pattern points mainly to numbers.
+ *
+ * @param pattern The tag pattern to test.
+ * @return true if at least 90% of the non-null values are numeric.
+ */
+hxl.classes.Source.prototype.isNumbery = function(pattern) {
+    var total_seen = 0;
+    var numeric_seen = 0;
+    this.getValues(pattern).forEach(function (value) {
+        if (value) {
+            total_seen++;
+            if (!isNaN(value)) {
+                numeric_seen++;
+            }
+        }
+    });
+    return (total_seen > 0 && (numeric_seen/total_seen >= 0.9));;
+}
 
 /**
  * Filter rows to include only those that match at least one predicate.
@@ -278,6 +312,20 @@ hxl.classes.Source.prototype.withoutColumns = function(patterns) {
  */
 hxl.classes.Source.prototype.count = function(patterns, aggregate) {
     return new hxl.classes.CountFilter(this, patterns, aggregate);
+}
+
+/**
+ * Return this data source wrapped in a hxl.classes.RenameFilter
+ *
+ * @param pattern the tag pattern to match for replacement.
+ * @param newTag the new HXL tag spec (e.g. "#adm1+code").
+ * @param newHeader (optional) the new header. If undefined, don't change.
+ * @param index the zero-based index to replace among matching tags. If undefined,
+ * replace *all* matches.
+ * @return a new data source, with matching column(s) replaced.
+ */
+hxl.classes.Source.prototype.rename = function(pattern, newTag, newHeader, index) {
+    return new hxl.classesRenameFilter(this, pattern, newTag, newHeader, index);
 }
 
 
@@ -1069,5 +1117,70 @@ hxl.classes.CountFilter.prototype._makeKey = function(row) {
     }
     return values.join("\0");
 }
+
+
+////////////////////////////////////////////////////////////////////////
+// hxl.classes.RenameFilter
+////////////////////////////////////////////////////////////////////////
+
+/**
+ * HXL filter to rename a column (new header and tag).
+ *
+ * @param source the hxl.classes.Source
+ * @param pattern the tag pattern to replace
+ * @param newTag the new HXL tag (with attributes)
+ * @param newHeader (optional) the new text header. If undefined or
+ * null or false, don't change the existing header.
+ * @param index the zero-based index of the match to replace. If
+ * undefined or null or false, replace *all* matches.
+ */
+hxl.classes.RenameFilter = function (source, pattern, newTagspec, newHeader, index) {
+    hxl.classes.BaseFilter.call(this, source);
+    this.pattern = hxl.classes.Pattern.parse(pattern);
+    this.newTagspec = newTagspec;
+    this.newHeader = newHeader;
+    this.index = index;
+    this._savedColumns = undefined;
+}
+
+hxl.classes.RenameFilter.prototype = Object.create(hxl.classes.BaseFilter.prototype);
+hxl.classes.RenameFilter.prototype.constructor = hxl.classes.RenameFilter;
+
+/**
+ * Get the renamed columns.
+ */
+hxl.classes.RenameFilter.prototype.getColumns = function() {
+    var cols, header;
+    var pattern = this.pattern;
+    var tagspec = this.newTagspec;
+    var index = this.index;
+    if (this._savedColumns === undefined) {
+        cols = [];
+        // loop through the columns, translating as needed
+        this.source.getColumns().forEach(function (col) {
+            // Index has to be 0 or undefined for a match
+            if (pattern.match(col) && !index) {
+                // we have a match!
+                if (this.header === undefined) {
+                    header = col.header;
+                } else {
+                    header = this.header;
+                }
+                col = hxl.classes.Column.parse(tagspec, header);
+                cols.push(col);
+            } else {
+                // no match: use existing column
+                cols.push(col);
+            }
+            // decrement the index counter if present
+            if (index) {
+                index -= 1;
+            }
+        });
+        this._savedColumns = cols;
+    }
+    return this._savedColumns;
+}
+
 
 // end
