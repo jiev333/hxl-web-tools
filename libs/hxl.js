@@ -67,6 +67,12 @@ hxl.load = function (url, callback) {
     }
 };
 
+hxl.parseString = function(string) {
+
+    return hxl.wrap(Papa.parse(string).data);
+
+}
+
 /**
  * Normalise case and whitespace in a string.
  */
@@ -325,7 +331,7 @@ hxl.classes.Source.prototype.count = function(patterns, aggregate) {
  * @return a new data source, with matching column(s) replaced.
  */
 hxl.classes.Source.prototype.rename = function(pattern, newTag, newHeader, index) {
-    return new hxl.classesRenameFilter(this, pattern, newTag, newHeader, index);
+    return new hxl.classes.RenameFilter(this, pattern, newTag, newHeader, index);
 }
 
 
