@@ -71,14 +71,16 @@ function mergeHeaders(hxlSet1,hxlSet2){
 function concatData(output,hxlSet){
 	
 	hxlSet.columns.forEach(function(c){
-		console.log(c);
+		console.log(c.displayTag);
 	})
 
 	hxlSet.forEach(function(r,i){
 
 		var row = [];
 
-		console.log(r.columns);
+		r.columns.forEach(function(c){
+			console.log(c.displayTag);
+		})
 
 		output[0].forEach(function(e){
 			row.push(r.get(e));
