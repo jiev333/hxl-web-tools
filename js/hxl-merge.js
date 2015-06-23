@@ -16,7 +16,7 @@ function hxlmerge(data1,data2){
 	outputDataSet = concatData(outputDataSet,hxlSet1);
 	outputDataSet = concatData(outputDataSet,hxlSet2);
 
-	console.log(outputDataSet);
+	$('#hxloutput').val(formatOutput(outputDataSet));
 }
 
 function uniqueIDColumns(hxlSet){
@@ -70,17 +70,10 @@ function mergeHeaders(hxlSet1,hxlSet2){
 
 function concatData(output,hxlSet){
 	
-	hxlSet.columns.forEach(function(c){
-		console.log(c.displayTag);
-	})
 
 	hxlSet.forEach(function(r,i){
 
 		var row = [];
-
-		r.columns.forEach(function(c){
-			console.log(c.displayTag);
-		})
 
 		output[0].forEach(function(e){
 			row.push(r.get(e));
@@ -93,11 +86,25 @@ function concatData(output,hxlSet){
 
 }
 
+function formatOutput(hxlSet){
+	var output = "";
+
+	console.log(hxlSet);
+
+	hxlSet.forEach(function(r){
+		r.forEach(function(e){
+			output+=e+',';
+		});
+		output+='\n';
+	});
+	return output;
+}
+
 //////// extending hxl library
 
-hxl.parseString = function(data) {
+/*hxl.parseString = function(data) {
 
 	return hxl.wrap(Papa.parse(data).data);
 
-}
+}*/
 
