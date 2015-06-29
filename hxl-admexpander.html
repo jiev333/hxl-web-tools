@@ -27,21 +27,28 @@
                 <div class="col-md-12 header">
                     <h1>HXL ADM Expander</h1>
                     <p>A tool for converting adm lists in a single cell to multiple rows.</p>
+                    <button id="advance-button" type="button" class="btn btn-primary margin20">Advanced</button>
+                    <p class="advanced">Copy hxlated adm(n) and adm(n+1) relationship into second text area.  Declare word that needs to be expanded into multiple child adm(n+1) rows.</p>
                 </div>
             </div>
-            <div class="row inputrow">
+            <div id="errormessage" class="alert alert-danger" role="alert"></div>               
+            <div class="row margin20">
                 <div class="col-md-6">
-                    <textarea id="hxldata1" rows="10" cols="50" placeholder="Paste Dataset here">header1    header2
-#adm3   #adm4
-kath    vdc1,vdc2,vdc3</textarea>
+                    <textarea id="hxldata1" rows="12" cols="50" placeholder="Paste Dataset here"></textarea>
                 </div>
-                <div class="col-md-6">
-                    <textarea id="hxldata2" rows="10" cols="50" placeholder="Paste adm relationship here"></textarea>
+                <div class="col-md-6 advanced">
+                    <div><p>Declare words to expand</p><input id="declaredwords"></input></div>
+                    <div class="margin20"><p>Adm relationship</p><textarea id="hxldata2" rows="7" cols="50" placeholder="Paste adm relationship here"></textarea></div>
                 </div>                
             </div>
             <div class="col-md-12">
                 <button id="expand-button" type="button" class="btn btn-primary">Expand</button>
             </div>
+            <div class="row">
+                <div class="col-md-12 margin20">
+                    <textarea id="hxloutput" rows="12" cols="50" placeholder=""></textarea>
+                </div>
+            </div>            
         </div>
         <script src="js/hxl-admexpander.js"></script>   
     </body>
