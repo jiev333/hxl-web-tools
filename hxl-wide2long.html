@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>HXL ADM Expander</title>
+        <title>HXL Wide 2 Long</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -25,31 +25,27 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12 header">
-                    <h1>HXL ADM Expander</h1>
-                    <p>A tool for converting adm lists in a single cell to multiple rows.</p>
-                    <button id="advance-button" type="button" class="btn btn-primary margin20">Advanced</button>
-                    <p class="advanced">Copy hxlated adm(n) and adm(n+1) relationship into second text area.  Declare word that needs to be expanded into multiple child adm(n+1) rows.</p>
+                    <h1>HXL Wide 2 Long</h1>
+                    <p>Used to transform a wide data set into a long data set.</p>
                 </div>
             </div>
-            <div id="errormessage" class="alert alert-danger" role="alert"></div>               
+            <div id="errormessage" class="alert alert-danger" role="alert"></div>            
             <div class="row margin20">
-                <div class="col-md-6">
-                    <textarea id="hxldata1" rows="12" cols="50" placeholder="Paste Dataset here"></textarea>
-                </div>
-                <div class="col-md-6 advanced">
-                    <div><p>Declare words to expand</p><input id="declaredwords"></input></div>
-                    <div class="margin20"><p>Adm relationship</p><textarea id="hxldata2" rows="7" cols="50" placeholder="Paste adm relationship here"></textarea></div>
-                </div>                
+                <div class="col-md-12">
+                    <textarea id="hxldata1" rows="10" cols="50" placeholder="Paste Dataset 1 here"></textarea>
+                </div>             
             </div>
-            <div class="col-md-12">
-                <button id="expand-button" type="button" class="btn btn-primary">Expand</button>
+            <div class="row">
+                <div class="col-md-12">
+                    <button id="Transform-button" type="button" class="btn btn-primary">Transform</button>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-12 margin20">
-                    <textarea id="hxloutput" rows="12" cols="50" placeholder=""></textarea>
+                    <textarea id="hxloutput" rows="10" cols="50" placeholder=""></textarea>
                 </div>
             </div>            
         </div>
-        <script src="js/hxl-admexpander.js"></script>   
+        <script src="js/hxl-merge.js"></script>   
     </body>
 </html>
