@@ -1,6 +1,9 @@
-$('#merge-button').on('click',function(){
+$('#errormessage').hide();
 
-	hxlmerge($('#hxldata1').val(),$('#hxldata2').val())
+$('#merge-button').on('click',function(){
+	$('#errormessage').hide();
+	$('#errormessage').html('');
+	hxlmerge($('#hxldata1').val(),$('#hxldata2').val());
 
 });
 
@@ -8,8 +11,19 @@ function hxlmerge(data1,data2){
 
 	var outputDataSet =[];
 
-	var hxlSet1 = uniqueIDColumns(hxl.parseString(data1));
-	var hxlSet2 = uniqueIDColumns(hxl.parseString(data2));
+	try {
+		var hxlSet1 = uniqueIDColumns(hxl.parseString(data1));
+	}
+	catch (err){
+		prompt('No HXl data set found in data set 1 input.');
+	}
+
+	try {
+		var hxlSet2 = uniqueIDColumns(hxl.parseString(data2));
+	}
+	catch (err){
+		prompt('No HXl data set found in data set 2 input.');
+	}	
 
 	outputDataSet.push(mergeHeaders(hxlSet1,hxlSet2));
 
@@ -100,11 +114,7 @@ function formatOutput(hxlSet){
 	return output;
 }
 
-//////// extending hxl library
-
-/*hxl.parseString = function(data) {
-
-	return hxl.wrap(Papa.parse(data).data);
-
-}*/
-
+function prompt(message){
+	$('#errormessage').show();
+	$('#errormessage').append('<p>'+message+'</p>');	
+}

@@ -8,3 +8,11 @@
 	margin-bottom:20px;
 	margin-top:20px;
 }
+
+.advanced{
+	display:none;
+}
+
+.toollink {
+	font-size:2em;
+}
