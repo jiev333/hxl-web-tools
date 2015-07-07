@@ -53,7 +53,7 @@ function expandRows(hxlSet,admLowest,declaredWords,admLookUp){
 	hxlOut.push(rowOut);
 
 	hxlSet.forEach(function (row, index) {      
-	    var expandedCell = row.get(admLowest.tag).split(',');
+	    var expandedCell = row.get(admLowest.tag).replace(/, /g,",").split(',');
 	    if(expandedCell.length>1){
 		    expandedCell.forEach(function(e){
 		    	rowOut = [];
