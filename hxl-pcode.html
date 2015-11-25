@@ -32,11 +32,17 @@
             <div id="errormessage" class="alert alert-danger" role="alert"></div>               
             <div class="row margin20">
                 <div class="col-md-5">
-                    <textarea id="hxldata1" rows="12" cols="50" placeholder="Paste Dataset here"></textarea>
+                    <textarea id="hxldata1" rows="12" cols="50" placeholder="Paste Dataset here (This Dataset is an hxl formatted table with a pair of administrative levels that you want to search for its pcode.)	For example:
+
+District	Chiefdom
+#adm2	#adm3
+Kono	Nimikoro
+Kono	Gbense
+Kono	Fiama"></textarea>
                 </div>
                 <div class="col-md-7">
 									<div class="row">
-										<div class="col-md-4"><p>Declare pcode tag to expand</p><input id="declaredwords"></input></div>
+										<div class="col-md-4"><p>Declare pcode tag to expand (e.g #adm3+code)</p><input id="declaredwords"></input></div>
 										<div class="col-md-3">
 											<p>Select match method</p><select id="match_method"">
 												<option value="exact_match">Exact Match</option>
@@ -44,7 +50,14 @@
 											</select>
 										</div>
 									</div>
-                  <div class="margin20"><p>Adm relationship</p><textarea id="hxldata2" rows="7" cols="50" placeholder="Paste adm relationship here"></textarea></div>
+                  <div class="margin20"><p>Adm relationship</p><textarea id="hxldata2" rows="7" cols="50" placeholder="Paste adm relationship here (This is an hxl formatted table that contains the administrative levels you want to find the match and its related pcode according to the pcode tag above.) For example:
+
+ADM4_NAME	ADM4_CODE	ADM3_NAME	ADM3_CODE	ADM2_NAME	ADM2_CODE
+#adm4	#adm4+code	#adm3	#adm3+code	#adm2	#adm2+code
+Kamara	SLE01030203	Gbane	SLE010302	Kono	SLE13
+Dumbia	SLE01030101	Fiama	SLE010301	Kono	SLE13
+Gbogboafeh	SLE01030903	Nimikoro	SLE010309	Kono	SLE13
+Gbondu	SLE01030602	Kamara	SLE010306	Kono	SLE13"></textarea></div>
                 </div> 
 						</div>
 						<div class="col-md-12 margin20" id="selection">
