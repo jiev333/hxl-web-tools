@@ -60,11 +60,13 @@ function expandRows(hxlSet,admLowest,declaredWords,admLookUp,matchMethod){
 	hxlOut.push(rowOut);
 	
 	// add the data to hxlOut
-	var expandedCell  = [];
 	hxlSet.forEach(function (row, index) { 
-		expandedCell = exactMatch(row,admHigher,admLower,declaredWords,admLookUp);
-		if (expandedCell.length===0&&matchMethod==="closest_match") {
-			expandedCell=closestMatch(row,admHigher,admLower,declaredWords,admLookUp);
+		var expandedCell  = [];
+		if (row.get(admHigher).length!==0 && row.get(admLower).length!==0) {
+			expandedCell = exactMatch(row,admHigher,admLower,declaredWords,admLookUp);
+			if (expandedCell.length===0&&matchMethod==="closest_match") {
+				expandedCell=closestMatch(row,admHigher,admLower,declaredWords,admLookUp);
+			}
 		}
 		if (expandedCell.length===0) {	// if nothing matched, write out the adm names to the output
 			expandedCell=origDataToOutput(row);
@@ -165,7 +167,7 @@ function exactMatch(data,admHigher,admLower,declaredWords,admLookUp) {
 	while (row = iterator.next()) {
 		if (data.get(admHigher).toLowerCase()===row.get(admHigher).toLowerCase() && data.get(admLower).toLowerCase()===row.get(admLower).toLowerCase()) {
 			expandedCell=origDataToOutput(data);
-			expandedCell.push(row.get(admLower));	// add the closest matched adm
+			expandedCell.push(row.get(admLower));	
 			declaredWords.forEach(function(tag) {
 				expandedCell.push(row.get(tag));
 			});
